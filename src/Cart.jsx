@@ -1,4 +1,11 @@
-const Cart = ({ cart, setCart }) => {
+import { useCartStore } from './store/cart-store';
+
+const Cart = () => {
+	const { cart, removeFromCart, clearCart } = useCartStore((state) => ({
+		cart: state.cart,
+		removeFromCart: state.removeFromCart,
+		clearCart: state.clearCart,
+	}));
 	return (
 		<>
 			<hr className='border-2 w-full' />
@@ -9,14 +16,7 @@ const Cart = ({ cart, setCart }) => {
 						<span>{product.name}</span>
 						<button
 							className='border-2 border-cyan-600 rounded-md w-[5rem] hover:bg-cyan-600 hover:text-white'
-							onClick={() =>
-								setCart(
-									cart.filter(
-										(productItem) =>
-											productItem.id !== product.id
-									)
-								)
-							}>
+							onClick={() => removeFromCart(product.id)}>
 							Remove
 						</button>
 					</div>
@@ -24,7 +24,7 @@ const Cart = ({ cart, setCart }) => {
 				{cart.length > 0 && (
 					<button
 						className='border-2 border-red-600 rounded-md w-[5rem] hover:bg-red-600 hover:text-white'
-						onClick={() => setCart([])}>
+						onClick={clearCart}>
 						Clear Cart
 					</button>
 				)}

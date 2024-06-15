@@ -1,6 +1,10 @@
 import { FaShoppingCart } from 'react-icons/fa';
+import { useCartStore } from './store/cart-store';
 
-const ProductList = ({ products, setCart }) => {
+const ProductList = ({ products }) => {
+	const { addToCart } = useCartStore((state) => ({
+		addToCart: state.addToCart,
+	}));
 	return (
 		<div className='flex flex-col items-center justify-center gap-6 w-full'>
 			{products?.map((product) => (
@@ -11,8 +15,7 @@ const ProductList = ({ products, setCart }) => {
 					<p className='font-normal text-base'>
 						{product.description}
 					</p>
-					<button
-						onClick={() => setCart((cart) => [...cart, product])}>
+					<button onClick={() => addToCart(product)}>
 						<div
 							className='flex items-center gap-2 border w-[7rem] text-sm bg-white text-black 
 						rounded-md pl-2 hover:bg-slate-400 hover:text-white'>
